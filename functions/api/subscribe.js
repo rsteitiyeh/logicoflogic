@@ -9,7 +9,6 @@ export async function onRequestPost(context) {
     const body = await context.request.json();
     const { email, name, recaptchaToken } = body;
 
-    // Validate inputs
     if (!email || !email.includes("@") || !email.includes(".")) {
       return new Response(JSON.stringify({ error: "Please enter a valid email address." }), {
         status: 400,
@@ -24,7 +23,6 @@ export async function onRequestPost(context) {
       });
     }
 
-    // Verify reCAPTCHA
     const RECAPTCHA_SECRET = context.env.RECAPTCHA_SECRET_KEY;
     if (RECAPTCHA_SECRET && recaptchaToken) {
       const recaptchaRes = await fetch("https://www.google.com/recaptcha/api/siteverify", {
@@ -42,7 +40,6 @@ export async function onRequestPost(context) {
       }
     }
 
-    // Send to MailerLite
     const API_KEY = context.env.MAILERLITE_API_KEY;
     const GROUP_ID = "182443421797975555";
 
@@ -61,9 +58,7 @@ export async function onRequestPost(context) {
       },
       body: JSON.stringify({
         email: email,
-        fields: {
-          name: name.trim(),
-        },
+        fields: { name: name.trim() },
         groups: [GROUP_ID],
       }),
     });
