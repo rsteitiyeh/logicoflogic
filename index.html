@@ -29,6 +29,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="/style.css">
+  <script src="https://www.google.com/recaptcha/api.js?render=6Let45AsAAAAAJpX3dIEF67t3osSIeaiOyIWCOkD"></script>
 </head>
 <body>
 
@@ -40,7 +41,20 @@
     <img src="/assets/logo.png" alt="Logic of Logic" class="hero-logo" loading="eager">
     <h1>AI Is Only as Smart as the Person Prompting It.</h1>
     <p class="hero-sub">Most people type random questions into AI and wonder why the results feel… off. The difference between average output and extraordinary results isn't the tool — it's the thinking behind it. Learn the logic that turns AI into your unfair advantage.</p>
-    <a href="#signup" class="btn-cta">Get the Free Prompt Cheat Sheet →</a>
+    <div class="hero-form-wrapper">
+      <form id="hero-form" class="hero-form" novalidate>
+        <div class="hero-form-fields">
+          <input type="text" class="form-input" name="name" placeholder="Your first name" required autocomplete="given-name" aria-label="First name">
+          <input type="email" class="form-input" name="email" placeholder="Your email address" required autocomplete="email" aria-label="Email address">
+          <button type="submit" class="btn-cta form-submit">Get the Free Cheat Sheet →</button>
+        </div>
+        <div class="consent-row">
+          <input type="checkbox" id="hero-consent" name="consent">
+          <label for="hero-consent">I agree to receive AI education emails from Logic of Logic. Unsubscribe anytime. <a href="/privacy-policy.html">Privacy Policy</a></label>
+        </div>
+        <div id="hero-form-message" class="form-message"></div>
+      </form>
+    </div>
     <p class="hero-micro">Join 0+ logical thinkers. No spam, unsubscribe anytime.</p>
   </div>
 </section>
@@ -180,7 +194,8 @@
     </div>
     <div class="form-wrapper">
       <form id="subscribe-form" novalidate>
-        <input type="email" class="form-input" placeholder="Enter your email address" required autocomplete="email" aria-label="Email address">
+        <input type="text" class="form-input" name="name" placeholder="Your first name" required autocomplete="given-name" aria-label="First name">
+        <input type="email" class="form-input" name="email" placeholder="Your email address" required autocomplete="email" aria-label="Email address">
         <div class="consent-row">
           <input type="checkbox" id="consent" name="consent">
           <label for="consent">I agree to receive AI education emails from Logic of Logic. Unsubscribe anytime. <a href="/privacy-policy.html">Privacy Policy</a></label>

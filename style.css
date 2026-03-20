@@ -493,6 +493,29 @@ section { padding: 5rem 1.5rem; }
 .legal-header a { color: var(--indigo); font-size: 0.9rem; text-decoration: none; font-weight: 500; }
 .legal-header a:hover { text-decoration: underline; }
 
+/* ── Hero Form ── */
+.hero-form-wrapper {
+  max-width: 520px;
+  margin-bottom: 0.5rem;
+}
+.hero-form-fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+.hero-form-fields .form-input {
+  flex: 1;
+  min-width: 160px;
+  margin-bottom: 0;
+}
+.hero-form-fields .btn-cta {
+  white-space: nowrap;
+}
+
+/* ── reCAPTCHA badge hide (v3 is invisible, badge is unnecessary) ── */
+.grecaptcha-badge { visibility: hidden; }
+
 /* ── Responsive ── */
 @media (max-width: 768px) {
   section { padding: 3.5rem 1.25rem; }
@@ -501,4 +524,10 @@ section { padding: 5rem 1.5rem; }
     grid-template-columns: 1fr;
   }
   .cred-bar { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+  .hero-form-fields {
+    flex-direction: column;
+  }
+  .hero-form-fields .form-input {
+    min-width: 100%;
+  }
 }

@@ -7,8 +7,9 @@ export async function onRequestPost(context) {
 
   try {
     const body = await context.request.json();
-    const { email } = body;
+    const { email, name, recaptchaToken } = body;
 
+    // Validate inputs
     if (!email || !email.includes("@") || !email.includes(".")) {
       return new Response(JSON.stringify({ error: "Please enter a valid email address." }), {
         status: 400,
@@ -16,6 +17,32 @@ export async function onRequestPost(context) {
       });
     }
 
+    if (!name || name.trim().length === 0) {
+      return new Response(JSON.stringify({ error: "Please enter your name." }), {
+        status: 400,
+        headers: { "Content-Type": "application/json", ...corsHeaders },
+      });
+    }
+
+    // Verify reCAPTCHA
+    const RECAPTCHA_SECRET = context.env.RECAPTCHA_SECRET_KEY;
+    if (RECAPTCHA_SECRET && recaptchaToken) {
+      const recaptchaRes = await fetch("https://www.google.com/recaptcha/api/siteverify", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: `secret=${RECAPTCHA_SECRET}&response=${recaptchaToken}`,
+      });
+      const recaptchaData = await recaptchaRes.json();
+
+      if (!recaptchaData.success || recaptchaData.score < 0.5) {
+        return new Response(JSON.stringify({ error: "Verification failed. Please try again." }), {
+          status: 403,
+          headers: { "Content-Type": "application/json", ...corsHeaders },
+        });
+      }
+    }
+
+    // Send to MailerLite
     const API_KEY = context.env.MAILERLITE_API_KEY;
     const GROUP_ID = "182443421797975555";
 
@@ -34,6 +61,9 @@ export async function onRequestPost(context) {
       },
       body: JSON.stringify({
         email: email,
+        fields: {
+          name: name.trim(),
+        },
         groups: [GROUP_ID],
       }),
     });
